@@ -10,7 +10,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withViewTransitions()),
     provideHttpClient(withInterceptorsFromDi()),
-    { provide: AuthInterceptor, useClass: AuthInterceptor }, // registramos el interceptor en el contenedor DI
-    
+
+    // registro del interceptor en el contenedor de inyección de dependencias
+    { provide: AuthInterceptor, useClass: AuthInterceptor },
   ],
 };
