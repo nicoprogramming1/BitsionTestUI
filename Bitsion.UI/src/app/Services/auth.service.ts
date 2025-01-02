@@ -87,27 +87,31 @@ export class AuthService {
    * por lo tanto primero revocamos del back, si todo ok procedemos a revocar
    * del front
    */
-  logout(): void {
+  logout(): Observable<void> {
     const refreshToken = localStorage.getItem('refreshToken');
+    
     if (refreshToken) {
-      this.revokeRefreshToken(refreshToken).subscribe({
-        next: () => {
-          // Una vez que el refresh token ha sido revocado en el backend eliminamos los tokens locales
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-        },
-        error: (err) => {
-          const errorMessage =
-            err.error?.message || err.message || 'Error al cerrar sesión.';
-          this.authStateService.setErrorState(errorMessage);
-        },
-      });
+      return this.revokeRefreshToken(refreshToken).pipe(
+        map(() => {
+          this.clearTokens(); // limpiamos los tokens si la revocación fue exitosa
+        }),
+        catchError((err) => {
+          console.error('Error revoking refresh token:', err); // Manejamos cualquier error
+          this.clearTokens(); // limpiamos los tokens incluso si hay un error
+          return of(); // necesitamos retornar un observable para prevenir bloqueos
+        })
+      );
     } else {
-      // Si no hay refresh token simplemente eliminamos amboss
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
+      this.clearTokens(); // si no hay tokens los eliminamos
+      return of();
     }
   }
+  
+  private clearTokens(): void {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  }
+  
 
   // este método revoca el refresh token del backend
   private revokeRefreshToken(refreshToken: string): Observable<any> {
