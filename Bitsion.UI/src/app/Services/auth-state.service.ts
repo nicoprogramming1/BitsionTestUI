@@ -36,7 +36,7 @@ export class AuthStateService {
     }
   
   
-    public getCurrentUserState(user: User) {
+    public setCurrentUserState(user: User) {
       this.#state.update((state) => ({
         ...state,
         loading: false,
@@ -45,7 +45,7 @@ export class AuthStateService {
       }));
     }
     
-    public saveUserState(user: User) {
+    public setSaveUserState(user: User) {
       this.#state.update((state) => {
         return {
           ...state,
