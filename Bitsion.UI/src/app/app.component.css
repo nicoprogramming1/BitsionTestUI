@@ -1,0 +1,40 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 25px;
+  }
+  
+  .main-content {
+    display: flex;
+    flex: 1;
+  }
+  
+  .content-area {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+  
+    .main-content {
+        flex-direction: column;
+    }
+  
+    app-sidemenu {
+        width: 100%;
+        height: auto;
+    }
+  
+    .content-area {
+        padding: 1rem;
+    }
+  
+    .header {
+        padding: 1rem;
+    }
+  }
