@@ -90,18 +90,18 @@ export class AuthService {
   logout(): void {
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
-      this.revokeRefreshToken(refreshToken).subscribe(
-        () => {
+      this.revokeRefreshToken(refreshToken).subscribe({
+        next: () => {
           // Una vez que el refresh token ha sido revocado en el backend eliminamos los tokens locales
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
         },
-        (err) => {
+        error: (err) => {
           const errorMessage =
             err.error?.message || err.message || 'Error al cerrar sesión.';
           this.authStateService.setErrorState(errorMessage);
-        }
-      );
+        },
+      });
     } else {
       // Si no hay refresh token simplemente eliminamos amboss
       localStorage.removeItem('accessToken');
@@ -144,6 +144,4 @@ export class AuthService {
         })
       );
   }
-
-  
 }
