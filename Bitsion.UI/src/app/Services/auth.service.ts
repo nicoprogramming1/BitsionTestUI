@@ -144,4 +144,26 @@ export class AuthService {
         })
       );
   }
+
+  // verificamos si el usuario está autenticado para acceder a un recurso
+  isAuthenticated(): boolean {
+    const accessToken = localStorage.getItem('accessToken');
+    
+    if (!accessToken) return false;
+  
+    const payload = this.decodeToken(accessToken);
+    const currentTime = Math.floor(Date.now() / 1000);
+    return payload.exp > currentTime; // verificamos si el token no está expirado
+  }
+  
+  // sólo decodifica el token
+  private decodeToken(token: string): any {
+    try {
+      const payload = atob(token.split('.')[1]);
+      return JSON.parse(payload);
+    } catch (e) {
+      return null;
+    }
+  }
+  
 }
