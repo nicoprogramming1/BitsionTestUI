@@ -7,5 +7,5 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 ];
