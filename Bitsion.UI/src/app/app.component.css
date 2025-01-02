@@ -16,6 +16,16 @@
     overflow-y: auto;
 }
 
+.text-danger {
+    color: lightsalmon;
+    font-weight: 100;
+}
+
+.text-danger {
+    color: lightseagreen;
+    font-weight: 100;
+}
+
 @media (max-width: 768px) {
     .wrapper {
         flex-direction: column;
