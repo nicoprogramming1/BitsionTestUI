@@ -4,6 +4,8 @@ export interface User {
   createdAt: Date;
 }
 
+// DTOs
+
 export interface UserRegisterRequest {
   email: string;
   password: string;
@@ -21,6 +23,8 @@ export interface UserLoginRequest {
   email: string;
   password: string;
 }
+
+// Interfaz para el state management
 
 export interface UserState {
   loading: boolean;
