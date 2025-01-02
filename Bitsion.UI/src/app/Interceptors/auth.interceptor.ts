@@ -12,12 +12,11 @@ import { AuthService } from '../Services/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  authService = inject(AuthService)
+  private authService = inject(AuthService);
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const accessToken = localStorage.getItem('accessToken'); // primero recuperamos el token
-
-    // si existe lo adjuntamos a la solicitud http
+    const accessToken = localStorage.getItem('accessToken');
+    
     if (accessToken) {
       req = req.clone({
         setHeaders: {
@@ -28,8 +27,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error) => {
-        // si el token expiró intentamos renovarlo
         if (error instanceof HttpErrorResponse && error.status === 401) {
+          // si el token expiró intentamos renovarlo
           return this.handleUnauthorizedError(req, next);
         }
         return throwError(() => error);
@@ -37,21 +36,28 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
+  /**
+   * maneja errores de autenticación intentando renovar el token y reenviando la solicitud
+   * el req es la  solicitud HTTP original
+   * el next el controlador HTTP
+   */
   private handleUnauthorizedError(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.authService.refreshToken().pipe(
       switchMap((newTokens) => {
         if (newTokens?.accessToken) {
+          // actualizamos la solicitud con el nuevo token
           req = req.clone({
             setHeaders: {
               Authorization: `Bearer ${newTokens.accessToken}`,
             },
           });
-          return next.handle(req);  // una vez refrescado intenta la solicitud original
+          return next.handle(req); // reintentar la solicitud original
         }
+        this.authService.logout(); // si no se puede renovar el token cerrar sesión
         return throwError(() => new Error('No se pudo renovar el token'));
       }),
       catchError((err) => {
-        this.authService.logout();  // si falla redirigimos a iniciar sesión
+        this.authService.logout();
         return throwError(() => err);
       })
     );
