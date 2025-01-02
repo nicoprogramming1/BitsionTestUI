@@ -26,7 +26,7 @@ export class AuthService {
   userRegister(request: UserRegisterRequest): Observable<User | null> {
     this.authStateService.setLoadingState(); // establecemos el estado de loading
     return this.http
-      .post<UserResponse>(`${this.apiUrl}/auth/register`, request)
+      .post<UserResponse>(`${this.apiUrl}/Auth/register`, request)
       .pipe(
         map((res) => {
           this.authStateService.setSaveUserState(res); // guardamos el usuario en state y loading: false
@@ -49,7 +49,7 @@ export class AuthService {
   login(request: UserLoginRequest): Observable<User | null> {
     this.authStateService.setLoadingState();
     return this.http
-      .post<UserResponse>(`${this.apiUrl}/auth/login`, request)
+      .post<UserResponse>(`${this.apiUrl}/Auth/login`, request)
       .pipe(
         map((res) => {
           const { accessToken, refreshToken, ...user } = res; // desestructuramos la respuesta
@@ -112,7 +112,7 @@ export class AuthService {
   // este método revoca el refresh token del backend
   private revokeRefreshToken(refreshToken: string): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}/auth/revoke-refresh-token`, { refreshToken })
+      .post<any>(`${this.apiUrl}/Auth/revoke-refresh-token`, { refreshToken })
       .pipe(
         catchError((err) => {
           const errorMessage =
@@ -130,7 +130,7 @@ export class AuthService {
     }
 
     return this.http
-      .post<UserResponse>(`${this.apiUrl}/auth/refresh-token`, { refreshToken })
+      .post<UserResponse>(`${this.apiUrl}/Auth/refresh-token`, { refreshToken })
       .pipe(
         map((res) => {
           const { accessToken, refreshToken, ...user } = res; // desestructuramos la respuesta
