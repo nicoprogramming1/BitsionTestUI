@@ -9,7 +9,7 @@ export class AuthStateService {
   #state = signal<UserState>({
       user: null,
       error: null,
-      loading: true,
+      loading: false,
     });
   
     public user = computed(() => this.#state().user);
