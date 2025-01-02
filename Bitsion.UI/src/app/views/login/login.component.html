@@ -1,26 +1,73 @@
 <div class="container">
-	<div class="screen">
-		<div class="screen_content">
-			<form class="login">
-				<div class="login_field">
-					<input type="text" class="login_input" placeholder="Email">
-				</div>
-				<div class="login_field">
-					<input type="password" class="login_input" placeholder="Password">
-				</div>
-				<button class="button login_submit">
-					<span class="button_text">Iniciar sesión</span>
-				</button>				
-			</form>
-			<div class="enterprise-login">
-				<h3>Ficticia SA</h3>
-			</div>
-		</div>
-		<div class="screen_background">
-			<span class="screen_background_shape screen_background_shape4"></span>
-			<span class="screen_background_shape screen_background_shape3"></span>		
-			<span class="screen_background_shape screen_background_shape2"></span>
-			<span class="screen_background_shape screen_background_shape1"></span>
-		</div>		
-	</div>
+
+    <app-loading-spinner [loading]="loadingState"></app-loading-spinner>
+
+        <div class="screen">
+            <div class="screen_content">
+                <form class="login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="login_field">
+                        <input type="text" class="login_input" placeholder="Email" id="email" formControlName="email" required />
+                    
+                        @if(email?.invalid && (email?.dirty || email?.touched)) {
+                            <div class="text-danger">
+                                @if(email?.errors?.["required"]) {
+                                <div>El email es obligatorio</div>
+                
+                                } @if(email?.errors?.["email"]) {
+                
+                                <div>Formato de email inválido</div>
+                                }
+                            </div>
+                
+                            }
+                    </div>
+    
+    
+    
+                    <div class="login_field">
+                        <input type="password" class="login_input" placeholder="Password" id="password" formControlName="password" required />
+                        @if(password?.invalid && (password?.dirty || password?.touched)){
+                            <div class="text-danger">
+                                @if(password?.errors?.["required"]) {
+                                <div>La contraseña es obligatoria</div>
+                                }
+                                @if(password?.errors?.["password"]) {
+                
+                                    <div>La contraseña debe tener un mínimo de 8 caracteres</div>
+                                    }
+                            </div>
+                
+                            }
+                    </div>
+
+                    @if(errorMessage) {
+                        <div class="text-danger">
+                            {{ errorMessage }}
+                        </div>
+                        } @if(successMessage) {
+                        <div class="text-success">
+                            {{ successMessage }}
+                        </div>
+                        }
+    
+    
+                    <button type="submit" class="button login_submit">
+                        <span class="button_text">Iniciar sesión</span>
+                    </button>				
+                </form>
+                <div class="enterprise-login">
+                    <h3>Ficticia SA</h3>
+                </div>
+            </div>
+            
+            <div class="screen_background">
+                <span class="screen_background_shape screen_background_shape4"></span>
+                <span class="screen_background_shape screen_background_shape3"></span>		
+                <span class="screen_background_shape screen_background_shape2"></span>
+                <span class="screen_background_shape screen_background_shape1"></span>
+            </div>		
+        </div>
+        
+
+
 </div>
