@@ -23,11 +23,11 @@ export class AuthStateService {
      * como del registro para ser observados desde donde se necesite en la aplicación
      */
   
-    public setLoadingState() {
+    public setLoadingState(): void {
       this.#state.update((state) => ({ ...state, loading: true, error: null }));
     }
   
-    public setErrorState(message: string) {
+    public setErrorState(message: string | null): void {
       this.#state.update((state) => ({
         ...state,
         loading: false,
@@ -36,7 +36,7 @@ export class AuthStateService {
     }
   
   
-    public setCurrentUserState(user: User) {
+    public setCurrentUserState(user: User): void {
       this.#state.update((state) => ({
         ...state,
         loading: false,
@@ -45,7 +45,7 @@ export class AuthStateService {
       }));
     }
     
-    public setSaveUserState(user: User) {
+    public setSaveUserState(user: User): void {
       this.#state.update((state) => {
         return {
           ...state,
