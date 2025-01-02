@@ -10,7 +10,7 @@ export interface Client {
     canDrive: boolean,
     isDiabetic: boolean,
     wearGlasses: boolean,
-    otherDiseases: string
+    otherDiseases: string | null
 }
 
 export interface ClientResponse {
@@ -40,6 +40,7 @@ export enum Nationality {
     Paraguay = "Paraguay"
 }
 
+// por propósitos de reglas de negocio, cliente con cobertura de seguro de vida o sin
 export enum State {
     Activo = "Activo",
     Inactivo = "Inactivo"

@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { Client, ClientState } from '../Interfaces/client.interface';
+import { Client, ClientState } from '../interfaces/client.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +19,28 @@ export class ClientStateService {
   public error = computed(() => this.#state().error);
   public loading = computed(() => this.#state().loading);
 
-  public loadingState() {
+  /**
+   * Los siguientes métodos sólo son utilizados por la Gestión de CLientes
+   * Estarán involucrados en toda funcionalidad que interactúe con
+   * la entidad Cliente para gestionar los estados tanto de carga y error
+   * como un registro actualizado de los clientes recuperados
+   * para ser observados desde donde se necesite en la aplicación
+   */
+
+  public setLoadingState() {
     this.#state.update((state) => ({ ...state, loading: true, error: null }));
   }
 
-  public getOneState(client: Client) {
+  public setErrorState(message: string) {
+    this.#state.update((state) => ({
+      ...state,
+      loading: false,
+      error: message || 'Ha ocurrido un error en la solicitud',
+    }));
+  }
+
+
+  public getOneClientState(client: Client) {
     this.#state.update((state) => ({
       ...state,
       loading: false,
@@ -32,7 +49,7 @@ export class ClientStateService {
     }));
   }
 
-  public getAllState(clients: Client[]) {
+  public getClientsListState(clients: Client[]) {
     this.#state.update((state) => ({
       ...state,
       loading: false,
@@ -41,7 +58,7 @@ export class ClientStateService {
     }));
   }
 
-  public deleteOneState(id: string) {
+  public deleteOneClientState(id: string) {
     this.#state.update((state) => ({
       ...state,
       loading: false,
@@ -51,7 +68,7 @@ export class ClientStateService {
   }
   
 
-  public deleteAllState() {
+  public deleteAllClientsState() {
     this.#state.update((state) => ({
       ...state,
       loading: false,
@@ -67,8 +84,8 @@ export class ClientStateService {
         ...state,
         loading: false,
         error: null,
-        clients: [...state.clients, ...clientsToSave], // Agrega múltiples o un solo cliente
-        client: Array.isArray(client) ? null : client, // Mantiene el último cliente agregado si no es un array
+        clients: [...state.clients, ...clientsToSave], // agrega múltiples o un solo cliente
+        client: Array.isArray(client) ? null : client, // mantiene el último cliente agregado si no es un array
       };
     });
   }
@@ -90,17 +107,8 @@ export class ClientStateService {
         loading: false,
         error: null,
         client: normalizeclient(updatedClient), // cliente individual actualizado
-        clients: updatedClients, // Lista de clientes actualizada
+        clients: updatedClients, // lista de clientes actualizada
       };
     });
-  }
-  
-
-  public errorState(message: string) {
-    this.#state.update((state) => ({
-      ...state,
-      loading: false,
-      error: message || 'Ha ocurrido un error en la solicitud',
-    }));
   }
 }

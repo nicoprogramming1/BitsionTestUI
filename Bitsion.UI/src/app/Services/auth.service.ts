@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { AuthStateService } from './auth-state.service';
-import { environment } from './../../environments/environment';
+import { environment } from '../../environments/environment';
 import {
   User,
   UserLoginRequest,
   UserRegisterRequest,
   UserResponse,
-} from '../Interfaces/user.interface';
+} from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
