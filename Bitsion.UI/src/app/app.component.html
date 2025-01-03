@@ -1,12 +1,19 @@
 <div class="wrapper">
-  <div class="header">
-    
-  </div>
-  <div class="main-content">
+  <!-- el header solo se muestra si no es la ruta de login -->
+   @if(!isLoginRoute){
+    <div class="header">
+      <app-header></app-header>
+    </div>
+   }
 
-    
+  <div class="main-content">
+    <!-- sidemenu solo se muestra si no es la ruta de login -->
+     @if(!isLoginRoute){
+        <app-sidemenu></app-sidemenu>
+     }
+
     <div class="content-area">
-      <router-outlet></router-outlet> <!-- contenido dinamico -->
+      <router-outlet></router-outlet> <!-- contenido dinámico -->
     </div>
   </div>
 </div>
