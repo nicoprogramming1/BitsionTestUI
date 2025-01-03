@@ -13,6 +13,8 @@ export interface Client {
     otherDiseases: string | null
 }
 
+export type ClientRegisterRequest = Omit<Client, 'id'>;
+
 export type ClientResponse = Client;
 
 export type Clients = Client[];
@@ -31,6 +33,8 @@ export interface ClientState {
     clients: Client[],
     client: Client | null
 }
+
+// Enumeraciones
 
 export enum Nationality {
     Argentina = "Argentina",
