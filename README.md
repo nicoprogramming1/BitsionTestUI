@@ -1,17 +1,15 @@
 # BitsionTestUI
 This repository is for a Bitsion test
 
+# Para acceder al login una vez esté la app corriendo, ya que no es posible acceder a otra por la seguridad: http://localhost:4200/login
+
 ### Decisiones Técnicas
 
 - Se implementa un interceptor para gestionar los encabezados y tokens de acceso auth al back
 - Se utiliza CSS3 para las hojas de estilos
-- El main font es Montserrat y se definen 3 weights para la aplicación
-- 
-
-## Patterns
-
-- Patrón Inmutable: no modificando directamente los datos existentes, sino creando copias nuevas con las actualizaciones requeridas. Ejemplo en el state management uso ...state
-- SRP: se aplican los principios de responsabilidad única para métodos y funcionalidades
+- Se utilizan guards para restringir el acceso a roles a funcionalidades específicas
+- Se implementa paginación para listados de clientes
+- Se gestionan los access token y refresh token y sus expiraciones guardados en LocalStorage (con más tiempo hubiera implementado HttpOnly cookies que es más seguro y previene CSRF y XSS)
 
 ## GlobalState
 
