@@ -41,13 +41,14 @@ export class ClientService {
   // get de la lista de clientes con paginación
   getClientsList(
     pageNumber: number,
-    pageSize: number
+    longName: string = '',
+    email: string = ''
   ): Observable<ClientsResponse | null> {
     this.clientStateService.setLoadingState();
-
+  
     return this.http
       .get<ClientsResponse>(
-        `${this.apiUrl}?pageNumber=${pageNumber}&pageSize=${pageSize}`
+        `${this.apiUrl}?pageNumber=${pageNumber}&longName=${longName}&email=${email}`
       )
       .pipe(
         map((response) => {
@@ -63,6 +64,7 @@ export class ClientService {
         })
       );
   }
+  
 
   getClientById(id: string): Observable<ClientResponse | null> {
     this.clientStateService.setLoadingState(); // establece el estado de carga
