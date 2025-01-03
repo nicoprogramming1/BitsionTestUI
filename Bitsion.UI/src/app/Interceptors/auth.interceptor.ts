@@ -16,6 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = localStorage.getItem('accessToken');
+
     
     if (accessToken) {
       req = req.clone({
@@ -24,6 +25,13 @@ export class AuthInterceptor implements HttpInterceptor {
         },
       });
     }
+
+    console.log('Outgoing Request', {
+      url: req.url,
+      method: req.method,
+      headers: req.headers.keys(),
+      body: req.body,
+    });
 
     return next.handle(req).pipe(
       catchError((error) => {
@@ -53,8 +61,8 @@ export class AuthInterceptor implements HttpInterceptor {
           });
           return next.handle(req); // reintentar la solicitud original
         }
-        this.authService.logout(); // si no se puede renovar el token cerrar sesión
-        return throwError(() => new Error('No se pudo renovar el token'));
+        this.authService.logout(); // si no se puede renovar el token, cerrar sesión
+        return throwError(() => new Error('No se pudo renovar el token o ambos tokens expiraron'));
       }),
       catchError((err) => {
         this.authService.logout();
