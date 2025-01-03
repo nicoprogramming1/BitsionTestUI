@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../../shared/loading-spinner/loading-spinner.component';
 import { ClientService } from '../../../services/client.service';
 import { ClientStateService } from '../../../services/client-state.service';
 
 @Component({
   selector: 'app-list',
-  imports: [CommonModule, ReactiveFormsModule, LoadingSpinnerComponent],
+  imports: [CommonModule, FormsModule, LoadingSpinnerComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
