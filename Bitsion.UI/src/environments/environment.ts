@@ -1,4 +1,7 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://localhost:7043/api'
+    apiUrl: {
+      auth: 'https://localhost:7043/api/Auth',
+      clients: 'https://localhost:7043/api/Clients'
+    }
   };
