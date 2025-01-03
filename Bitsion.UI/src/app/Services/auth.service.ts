@@ -14,14 +14,14 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl.auth;
   private http = inject(HttpClient);
   private authStateService = inject(AuthStateService);
 
   userRegister(request: UserRegisterRequest): Observable<User | null> {
     this.authStateService.setLoadingState(); // establecemos el estado de loading
     return this.http
-      .post<UserResponse>(`${this.apiUrl}/Auth/register`, request)
+      .post<UserResponse>(`${this.apiUrl}/register`, request)
       .pipe(
         map((res) => {
           if (res) {
@@ -44,7 +44,7 @@ export class AuthService {
   login(request: UserLoginRequest): Observable<User | null> {
     this.authStateService.setLoadingState();
     return this.http
-      .post<UserResponse>(`${this.apiUrl}/Auth/login`, request)
+      .post<UserResponse>(`${this.apiUrl}/login`, request)
       .pipe(
         map((res) => {
           if (res) {
@@ -105,7 +105,7 @@ export class AuthService {
 
   private revokeRefreshToken(refreshToken: string): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}/Auth/revoke-refresh-token`, { refreshToken })
+      .post<any>(`${this.apiUrl}/revoke-refresh-token`, { refreshToken })
       .pipe(
         catchError((err) => {
           const errorMessage =
@@ -123,7 +123,7 @@ export class AuthService {
     }
 
     return this.http
-      .post<UserResponse>(`${this.apiUrl}/Auth/refresh-token`, { refreshToken })
+      .post<UserResponse>(`${this.apiUrl}/refresh-token`, { refreshToken })
       .pipe(
         map((res) => {
           if (res) {
