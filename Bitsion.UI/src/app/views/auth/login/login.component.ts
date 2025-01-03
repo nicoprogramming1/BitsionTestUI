@@ -55,7 +55,7 @@ export class LoginComponent {
     this.authService.login(payload).subscribe({
       next: (res) => {
         if (res) {
-          this.router.navigate(['/clients']);
+          this.router.navigate(['/list']);
           this.successMessage = 'Inicio de sesión exitoso';
           this.errorMessage = null;
         }
