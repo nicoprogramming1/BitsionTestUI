@@ -29,7 +29,7 @@
             <label for="nationality">Nacionalidad: *</label>
             <select class="form-control" id="nationality" formControlName="nationality">
                 <option value="" disabled>Seleccionar nacionalidad</option>
-                @for(let country of countries; track country){
+                @for(country of countries; track country){
                     <option [value]="country">{{ country }}</option>
                 }
             </select>
@@ -40,7 +40,7 @@
             <label for="gender">Género: *</label>
             <select class="form-control" id="gender" formControlName="gender">
                 <option value="" disabled>Seleccionar género</option>
-                @for(let gender of genders; track gender){
+                @for(gender of genders; track gender){
                     <option [value]="gender">{{ gender }}</option>
                 }
             </select>
@@ -51,7 +51,7 @@
             <label for="state">Estado de cliente: *</label>
             <select class="form-control" id="state" formControlName="state">
                 <option value="" disabled>Seleccionar estado</option>
-                @for(let state of states; track state){
+                @for(state of states; track state){
                     <option [value]="state">{{ state }}</option>
                 }
             </select>

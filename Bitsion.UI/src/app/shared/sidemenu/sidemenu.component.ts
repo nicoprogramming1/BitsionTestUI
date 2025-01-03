@@ -2,13 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-sidemenu',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, ReactiveFormsModule],
   templateUrl: './sidemenu.component.html',
-  styleUrls: ['./sidemenu.component.scss'],
+  styleUrls: ['./sidemenu.component.css'],
 })
 export class SidemenuComponent {
   private authService = inject(AuthService);

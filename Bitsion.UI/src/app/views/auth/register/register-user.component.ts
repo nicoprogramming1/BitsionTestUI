@@ -36,9 +36,11 @@ export class RegisterUserComponent {
 
       this.authService.userRegister(user).subscribe({
         next: (res) => {
-          console.log('Se ha registrado con éxito al usuario con email: ', res?.email);
-          this.invalidForm = false;
-          this.successMessage = 'El usuario se ha creado con éxito';
+          if(res){
+            console.log('Se ha registrado con éxito al usuario con email: ', res?.email);
+            this.invalidForm = false;
+            this.successMessage = 'El usuario se ha creado con éxito';
+          }
         },
         error: (err) => {
           console.error('Ha habido un error en el registro', err);

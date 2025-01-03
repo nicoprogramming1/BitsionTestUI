@@ -76,9 +76,11 @@ export class RegisterClientComponent {
 
       this.clientService.registerClient(client).subscribe({
         next: (res) => {
-          console.log('Cliente registrado con éxito:', res?.longName);
-          this.invalidForm = false;
-          this.successMessage = 'El cliente se ha creado con éxito';
+          if(res){
+            console.log('Cliente registrado con éxito:', res?.longName);
+            this.invalidForm = false;
+            this.successMessage = 'El cliente se ha creado con éxito';
+          }
         },
         error: (err) => {
           console.error('Error al registrar el cliente', err);
