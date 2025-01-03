@@ -13,7 +13,7 @@ import { ClientStateService } from './client-state.service';
   providedIn: 'root',
 })
 export class ClientService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl.clients;
   private http = inject(HttpClient);
   private clientStateService = inject(ClientStateService);
 
