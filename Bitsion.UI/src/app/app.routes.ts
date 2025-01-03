@@ -47,5 +47,6 @@ export const routes: Routes = [
     ],
   },
   // acá redireccionamos la ruta por defecto al listado de clientes
-  { path: '', redirectTo: '/list', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, // esta momentaneamente redirigiendo al login
+  { path: '**', redirectTo: 'login' }, // redirige cualquier ruta no encontrada al login
 ];
