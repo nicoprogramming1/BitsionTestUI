@@ -13,16 +13,14 @@ export interface Client {
     otherDiseases: string | null
 }
 
-export interface ClientResponse {
-    success: boolean,
-    message: string,
-    data: Client
-}
+export type ClientResponse = Client;
 
+// lista de clientes con paginación
 export interface ClientsResponse {
-    success: boolean,
-    message: string,
-    data: Client[]
+    clients: ClientResponse[];   // array de clientes
+    totalCount: number;          // total
+    pageNumber: number;          // página actual
+    pageSize: number;            // cantidad de cloients por página
 }
 
 export interface ClientState {
