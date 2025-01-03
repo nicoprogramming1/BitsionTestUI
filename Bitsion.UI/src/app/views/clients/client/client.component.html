@@ -1,0 +1,95 @@
+@if(client){
+  <div>
+    <h2>Detalles del Cliente</h2>
+  
+    <!-- este es el formulario en modo edición -->
+    @if(isEditing){
+      <form #clientForm="ngForm" (ngSubmit)="onSave(clientForm)">
+        <div>
+          <label for="id">ID:</label>
+          <input id="id" [(ngModel)]="client.id" name="id" required readonly />
+        </div>
+        <div>
+          <label for="longName">Nombre Completo:</label>
+          <input id="longName" [(ngModel)]="client.longName" name="longName" required />
+        </div>
+        <div>
+          <label for="age">Edad:</label>
+          <input id="age" type="number" [(ngModel)]="client.age" name="age" required />
+        </div>
+        <div>
+          <label for="email">Correo:</label>
+          <input id="email" [(ngModel)]="client.email" name="email" required />
+        </div>
+        <div>
+          <label for="gender">Género:</label>
+          <select id="gender" [(ngModel)]="client.gender" name="gender" required>
+            <option value="Male">Masculino</option>
+            <option value="Female">Femenino</option>
+            <option value="Other">Otro</option>
+          </select>
+        </div>
+        <div>
+          <label for="phone">Teléfono:</label>
+          <input id="phone" [(ngModel)]="client.phone" name="phone" required />
+        </div>
+        <div>
+          <label for="state">Estado:</label>
+          <select id="state" [(ngModel)]="client.state" name="state" required>
+            <option value="Active">Activo</option>
+            <option value="Inactive">Inactivo</option>
+          </select>
+        </div>
+        <div>
+          <label for="nationality">Nacionalidad:</label>
+          <input id="nationality" [(ngModel)]="client.nationality" name="nationality" required />
+        </div>
+        <div>
+          <label for="canDrive">¿Puede Conducir?</label>
+          <input type="checkbox" id="canDrive" [(ngModel)]="client.canDrive" name="canDrive" />
+        </div>
+        <div>
+          <label for="isDiabetic">¿Es diabético?</label>
+          <input type="checkbox" id="isDiabetic" [(ngModel)]="client.isDiabetic" name="isDiabetic" />
+        </div>
+        <div>
+          <label for="wearGlasses">¿Usa gafas?</label>
+          <input type="checkbox" id="wearGlasses" [(ngModel)]="client.wearGlasses" name="wearGlasses" />
+        </div>
+        <div>
+          <label for="otherDiseases">Otras enfermedades:</label>
+          <input id="otherDiseases" [(ngModel)]="client.otherDiseases" name="otherDiseases" />
+        </div>
+        <button type="submit">Guardar Cambios</button>
+      </form>
+    }
+  
+    <!-- En modo edit off mostraremos el cliente y su info -->
+    @if(!isEditing){
+    <div class="client-info">
+      <p class="client-data"><span class="label">ID:</span> {{ client.id }}</p>
+      <p class="client-data"><span class="label">Nombre:</span> {{ client.longName }}</p>
+      <p class="client-data"><span class="label">Email:</span> {{ client.email }}</p>
+      <p class="client-data"><span class="label">Estado:</span> {{ client.state }}</p>
+      <p class="client-data"><span class="label">Teléfono:</span> {{ client.phone }}</p>
+    </div>
+    }
+  
+  
+    <!-- btnes modificar / eliminar -->
+    <div>
+      <button (click)="toggleEdit()">{{ isEditing ? 'Cancelar' : 'Modificar' }}</button>
+      <button (click)="confirmDelete()">Eliminar</button>
+    </div>
+  
+    <!-- confirmamos eliminiación -->
+    @if(isConfirmingDelete){
+    <div class="confirmation-dialog">
+      <p>¿Estás seguro de que deseas eliminar este cliente?</p>
+      <button (click)="onDelete(client.id)">Sí</button>
+      <button (click)="cancelDelete()">No</button>
+    </div>
+  
+    }
+  </div>
+}
