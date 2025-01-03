@@ -6,46 +6,46 @@ export const routes: Routes = [
     title: 'Inicio de sesión',
     path: 'login',
     loadComponent: () =>
-      import('./views/auth/login/login.component').then(
-        (m) => m.LoginComponent
-      ),
+      import('./views/auth/login/login.component').then((m) => m.LoginComponent),
   },
+  // solo accesible para admin
   {
     title: 'Registro de usuarios',
-    path: 'register',
+    path: 'register-user',
     loadComponent: () =>
       import('./views/auth/register/register-user.component').then(
         (m) => m.RegisterUserComponent
       ),
     canActivate: [authGuard],
-    data: { menu: {  role: 'admin' } }, // sólo es visible para el admin
+    data: { menu: { role: 'admin' } },
   },
+  // Rutas para el CRUD de Clientes
   {
-    title: 'Registro de clientes',
-    path: 'register',
-    loadComponent: () =>
-      import('./views/clients/register/register-client.component').then(
-        (m) => m.RegisterClientComponent
-      ),
+    path: '',
     canActivate: [authGuard],
+    children: [
+      {
+        path: 'list',
+        title: 'Clientes',
+        loadComponent: () =>
+          import('./views/clients/list/list.component').then((m) => m.ListComponent),
+      },
+      {
+        path: 'client/:id',
+        title: 'Consulta de cliente',
+        loadComponent: () =>
+          import('./views/clients/client/client.component').then((m) => m.ClientComponent),
+      },
+      {
+        path: 'register',
+        title: 'Registro de cliente',
+        loadComponent: () =>
+          import('./views/clients/register/register-client.component').then(
+            (m) => m.RegisterClientComponent
+          ),
+      },
+    ],
   },
-  {
-    title: 'Clientes',
-    path: 'list',
-    loadComponent: () =>
-      import('./views/clients/list/list.component').then(
-        (m) => m.ListComponent
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    title: 'Consulta de cliente',
-    path: 'client',
-    loadComponent: () =>
-      import('./views/clients/client/client.component').then(
-        (m) => m.ClientComponent
-      ),
-    canActivate: [authGuard],
-  },
+  // acá redireccionamos la ruta por defecto al listado de clientes
   { path: '', redirectTo: '/list', pathMatch: 'full' },
 ];
