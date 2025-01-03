@@ -15,6 +15,8 @@ export interface Client {
 
 export type ClientResponse = Client;
 
+export type Clients = Client[];
+
 // lista de clientes con paginación
 export interface ClientsResponse {
     clients: ClientResponse[];   // array de clientes
