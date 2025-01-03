@@ -161,7 +161,7 @@ export class AuthService {
   }
   
   // sólo decodifica el token
-  private decodeToken(token: string): any {
+  decodeToken(token: string): any {
     try {
       const payload = atob(token.split('.')[1]);
       return JSON.parse(payload);
