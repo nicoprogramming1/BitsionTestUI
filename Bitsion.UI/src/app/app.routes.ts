@@ -14,8 +14,8 @@ export const routes: Routes = [
     title: 'Registro de usuarios',
     path: 'register',
     loadComponent: () =>
-      import('./views/auth/register/register.component').then(
-        (m) => m.RegisterComponent
+      import('./views/auth/register/register-user.component').then(
+        (m) => m.RegisterUserComponent
       ),
     canActivate: [authGuard],
     data: { menu: {  role: 'admin' } }, // sólo es visible para el admin
@@ -24,8 +24,8 @@ export const routes: Routes = [
     title: 'Registro de clientes',
     path: 'register',
     loadComponent: () =>
-      import('./views/clients/register/register.component').then(
-        (m) => m.RegisterComponent
+      import('./views/clients/register/register-client.component').then(
+        (m) => m.RegisterClientComponent
       ),
     canActivate: [authGuard],
   },
