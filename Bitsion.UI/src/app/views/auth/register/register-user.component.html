@@ -1,0 +1,31 @@
+<div class="container">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="email">Email: *</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+            <div class="text-danger">{{showEmailErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña: *</label>
+            <input type="password" class="form-control" id="password" formControlName="password">
+            <div class="text-danger">{{showPasswordErrors()}}</div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Registrar usuario</button>
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">Reestablecer</button>
+        </div>
+
+        <div class="messages">
+            @if(successMessage) {
+                <div class="text-success">{{ successMessage }}</div>
+            }
+        </div>
+        <div>
+            @if(invalidForm) {
+                <span class="text-danger">Hay campos obligatorios que deben ser completados (*)</span>
+            }
+        </div>
+    </form>
+</div>

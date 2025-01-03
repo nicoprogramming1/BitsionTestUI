@@ -1,0 +1,42 @@
+<section>
+  <aside class="sidebar">
+    <ul class="sidebar_list">
+      
+      <!-- Iteración de menuItems con @for -->
+      @for(route of menuItems; track route.title) {
+      
+        <li class="sidebar_element">
+
+          <!-- Condicional para verificar si tiene hijos con @if -->
+          @if(route.children && route.children.length > 0){
+            <a [routerLink]="route.path" class="sidebar_link">
+              <p class="sidebar_text">{{ route.title }}</p>
+            </a>
+
+            <!-- Submenú si tiene elementos hijos -->
+            <ul class="submenu">
+              @for(child of route.children; track child.title) {
+                <li class="submenu_item">
+                  <a [routerLink]="child.path" class="submenu_link">
+                    <p class="sidebar_text">{{ child.title }}</p>
+                  </a>
+                </li>
+              }
+            </ul>
+          }
+
+          <!-- Bloque alternativo para cuando NO tenga hijos (se usa showLink como plantilla) -->
+          @else { 
+            <ng-template #showLink>
+              <a [routerLink]="route.path" class="sidebar_link">
+                <p class="sidebar_text">{{ route.title }}</p>
+              </a>
+            </ng-template>
+          }
+
+        </li>
+
+      }
+    </ul>
+  </aside>
+</section>

@@ -1,0 +1,73 @@
+<div class="content">
+    <!-- mostrar el loading-spinner si loading: true -->
+    <app-loading-spinner [loading]="loading"></app-loading-spinner>
+
+    <div class="filter-container">
+        <h2>Filtrar clientes</h2>
+
+        <form (submit)="applyFilters($event)">
+            <div class="row">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="filter.longName"
+                        name="longName" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Email" [(ngModel)]="filter.email"
+                        name="email" />
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Listado de clientes -->
+    <div class="clients-list">
+        @if (!loading && !error && clients && clients.length > 0) {
+            @for (client of clients; track client.id) {
+                <div class="client-item">
+                    <div class="client-info">
+                        <p class="client-data"><span class="label">ID:</span> {{ client.id }}</p>
+                        <p class="client-data"><span class="label">Nombre:</span> {{ client.longName }}</p>
+                        <p class="client-data"><span class="label">Email:</span> {{ client.email }}</p>
+                        <p class="client-data"><span class="label">Estado:</span> {{ client.state }}</p>
+                        <p class="client-data"><span class="label">Teléfono:</span> {{ client.phone }}</p>
+                    </div>
+                </div>
+            }
+        }
+
+        <!-- este es el mensaje de error o de estado vacío -->
+        @if(error){
+            <div class="error-message">
+                <p>{{ error }}</p>
+            </div>
+        }
+
+        @if(!clients || clients.length === 0){
+           <div>
+               <p class="text-danger">No hay clientes disponibles</p>
+           </div>
+        }
+    </div>
+
+    <!-- Paginación -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" [ngClass]="{'disabled': !canGoBack()}">
+                <a class="page-link" (click)="goToPage(page - 1)" aria-disabled="!canGoBack()">Anterior</a>
+            </li>
+
+            <li *ngFor="let i of [].constructor(totalPages); let index = index" class="page-item" 
+                [ngClass]="{'active': page === (index + 1), 'disabled': totalPages === 1}">
+                <a class="page-link" (click)="goToPage(index + 1)">{{ index + 1 }}</a>
+            </li>
+
+            <li class="page-item" [ngClass]="{'disabled': !canGoNext()}">
+                <a class="page-link" (click)="goToPage(page + 1)" aria-disabled="!canGoNext()">Siguiente</a>
+            </li>
+        </ul>
+    </nav>
+</div>

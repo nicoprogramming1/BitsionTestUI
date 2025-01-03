@@ -1,0 +1,51 @@
+*, ::after, ::before {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+
+body {
+    font-family: "montserrat", "Helvetica", "Helvetica Neue", sans-serif;
+    font-weight: 400;
+    background-image: linear-gradient(#918ed4, #eee);
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* textos de error y success */
+.text-danger {
+    padding-top: 5px;
+    color: tomato;
+    font-weight: 250;
+}
+
+.text-success {
+    color: lightseagreen;
+    font-weight: 250;
+}
+
+/* Define tipografía regular */
+@font-face {
+    font-family: montserrat;
+    src: url("../public/fonts/Montserrat-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Define tipografía bold */
+@font-face {
+    font-family: montserrat;
+    src: url("../public/fonts/Montserrat-ExtraBold.ttf") format("truetype");
+    font-weight: 700;
+}
+
+/* Define tipografía light */
+@font-face {
+    font-family: montserrat;
+    src: url("../public/fonts/Montserrat-ExtraLight.ttf") format("truetype");
+    font-weight: 100;
+}
