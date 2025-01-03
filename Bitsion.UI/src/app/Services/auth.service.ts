@@ -18,18 +18,15 @@ export class AuthService {
   private http = inject(HttpClient);
   private authStateService = inject(AuthStateService);
 
-  /**
-   * Todos los métodos implementan el state management de auth-state.service.ts
-   * El handleError se encarga de gestionar los errores y sus mensajes
-   */
-
   userRegister(request: UserRegisterRequest): Observable<User | null> {
     this.authStateService.setLoadingState(); // establecemos el estado de loading
     return this.http
       .post<UserResponse>(`${this.apiUrl}/Auth/register`, request)
       .pipe(
         map((res) => {
-          this.authStateService.setSaveUserState(res); // guardamos el usuario en state y loading: false
+          if (res) {
+            this.authStateService.setSaveUserState(res); // guardamos el usuario en state y loading: false
+          }
           return res;
         }),
         catchError((err) => {
@@ -40,22 +37,23 @@ export class AuthService {
       );
   }
 
-  // este es el manejador de errores del service, le enviamos el mensaje de error
   private handleError(errorMessage: string): void {
     this.authStateService.setErrorState(errorMessage); // establecer el error
   }
 
-  // nos devuelven el user con la info de tokens si es 200
   login(request: UserLoginRequest): Observable<User | null> {
     this.authStateService.setLoadingState();
     return this.http
       .post<UserResponse>(`${this.apiUrl}/Auth/login`, request)
       .pipe(
         map((res) => {
-          const { accessToken, refreshToken, ...user } = res; // desestructuramos la respuesta
-          this.storeTokens({ accessToken, refreshToken }); // al recibir los tokens los guardamos en localStorage
-          this.authStateService.setCurrentUserState(user);
-          return user;
+          if (res) {
+            const { accessToken, refreshToken, ...user } = res; // desestructuramos la respuesta
+            this.storeTokens({ accessToken, refreshToken }); // al recibir los tokens los guardamos en localStorage
+            this.authStateService.setCurrentUserState(user);
+            return user;
+          }
+          return null;
         }),
         catchError((err) => {
           const errorMessage = err.error?.message || err.message;
@@ -65,7 +63,6 @@ export class AuthService {
       );
   }
 
-  // los tokens serán almacenados en localStorage para uso en la aplicación
   private storeTokens({
     accessToken,
     refreshToken,
@@ -81,12 +78,6 @@ export class AuthService {
     }
   }
 
-  /**
-   * Debemos revocar tanto los tokens del usuario en el frontend
-   * como en el backend, para mantenerlos sincronizados y seguros por igual
-   * por lo tanto primero revocamos del back, si todo ok procedemos a revocar
-   * del front
-   */
   logout(): Observable<void> {
     const refreshToken = localStorage.getItem('refreshToken');
     
@@ -111,9 +102,7 @@ export class AuthService {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
   }
-  
 
-  // este método revoca el refresh token del backend
   private revokeRefreshToken(refreshToken: string): Observable<any> {
     return this.http
       .post<any>(`${this.apiUrl}/Auth/revoke-refresh-token`, { refreshToken })
@@ -137,9 +126,12 @@ export class AuthService {
       .post<UserResponse>(`${this.apiUrl}/Auth/refresh-token`, { refreshToken })
       .pipe(
         map((res) => {
-          const { accessToken, refreshToken, ...user } = res; // desestructuramos la respuesta
-          this.storeTokens({ accessToken, refreshToken });
-          return user;
+          if (res) {
+            const { accessToken, refreshToken, ...user } = res; // desestructuramos la respuesta
+            this.storeTokens({ accessToken, refreshToken });
+            return user;
+          }
+          return null;
         }),
         catchError((err) => {
           const errorMessage = err.error?.message || err.message;
@@ -149,7 +141,6 @@ export class AuthService {
       );
   }
 
-  // verificamos si el usuario está autenticado para acceder a un recurso
   isAuthenticated(): boolean {
     const accessToken = localStorage.getItem('accessToken');
     
@@ -160,7 +151,6 @@ export class AuthService {
     return payload.exp > currentTime; // verificamos si el token no está expirado
   }
   
-  // sólo decodifica el token
   decodeToken(token: string): any {
     try {
       const payload = atob(token.split('.')[1]);
@@ -169,5 +159,4 @@ export class AuthService {
       return null;
     }
   }
-  
 }
