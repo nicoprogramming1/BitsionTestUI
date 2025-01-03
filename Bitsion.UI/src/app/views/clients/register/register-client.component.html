@@ -1,0 +1,130 @@
+<div class="container">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label for="longName">Nombre completo: *</label>
+            <input type="longName" class="form-control" id="longName" formControlName="longName">
+            <div class="text-danger">{{showLongNameErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email: *</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+            <div class="text-danger">{{showEmailErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Edad: *</label>
+            <input type="number" class="form-control" id="age" formControlName="age">
+            <div class="text-danger">{{showAgeErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Teléfono: *</label>
+            <input type="text" class="form-control" id="phone" formControlName="phone">
+            <div class="text-danger">{{showPhoneErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="nationality">Nacionalidad: *</label>
+            <select class="form-control" id="nationality" formControlName="nationality">
+                <option value="" disabled>Seleccionar nacionalidad</option>
+                @for(let country of countries; track country){
+                    <option [value]="country">{{ country }}</option>
+                }
+            </select>
+            <div class="text-danger">{{showNationalityErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Género: *</label>
+            <select class="form-control" id="gender" formControlName="gender">
+                <option value="" disabled>Seleccionar género</option>
+                @for(let gender of genders; track gender){
+                    <option [value]="gender">{{ gender }}</option>
+                }
+            </select>
+            <div class="text-danger">{{showGenderErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="state">Estado de cliente: *</label>
+            <select class="form-control" id="state" formControlName="state">
+                <option value="" disabled>Seleccionar estado</option>
+                @for(let state of states; track state){
+                    <option [value]="state">{{ state }}</option>
+                }
+            </select>
+            <div class="text-danger">{{showStateErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="canDrive">¿Sabe conducir? *</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" id="canDriveYes" formControlName="canDrive" [value]="true">
+                    Sí
+                </label>
+                <label>
+                    <input type="radio" id="canDriveNo" formControlName="canDrive" [value]="false">
+                    No
+                </label>
+            </div>
+            <div class="text-danger">{{showCanDriveErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="isDiabetic">¿Es diabético? *</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" id="isDiabeticYes" formControlName="isDiabetic" [value]="true">
+                    Sí
+                </label>
+                <label>
+                    <input type="radio" id="isDiabeticNo" formControlName="isDiabetic" [value]="false">
+                    No
+                </label>
+            </div>
+            <div class="text-danger">{{showIsDiabeticErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="wearGlasses">¿Usa lentes? *</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" id="wearGlassesYes" formControlName="wearGlasses" [value]="true">
+                    Sí
+                </label>
+                <label>
+                    <input type="radio" id="wearGlassesNo" formControlName="wearGlasses" [value]="false">
+                    No
+                </label>
+            </div>
+            <div class="text-danger">{{showWearGlassesErrors()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="otherDiseases">¿Posee otras enfermedades? ¿Cuáles?</label>
+            <textarea class="form-control" id="otherDiseases" formControlName="otherDiseases" rows="4"></textarea>
+            <div class="text-danger">{{showOtherDiseasesErrors()}}</div>
+        </div>
+        
+
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Registrar usuario</button>
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">Reestablecer</button>
+        </div>
+
+        <div class="messages">
+            @if(successMessage) {
+                <div class="text-success">{{ successMessage }}</div>
+            }
+        </div>
+        <div>
+            @if(invalidForm) {
+                <span class="text-danger">Hay campos obligatorios que deben ser completados (*)</span>
+            }
+        </div>
+    </form>
+</div>
