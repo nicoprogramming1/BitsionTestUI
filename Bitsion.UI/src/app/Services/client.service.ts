@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
@@ -46,21 +46,25 @@ export class ClientService {
   ): Observable<ClientsResponse | null> {
     this.clientStateService.setLoadingState();
   
+    // encapsulamos los parámetros
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('longName', longName)
+      .set('email', email);
+  
     return this.http
-      .get<ClientsResponse>(
-        `${this.apiUrl}?pageNumber=${pageNumber}&longName=${longName}&email=${email}`
-      )
+      .get<ClientsResponse>(this.apiUrl, { params })
       .pipe(
         map((response) => {
           if (response) {
-            this.clientStateService.getClientsListState(response.clients); // actualiza la lista de clientes en el estado
+            this.clientStateService.getClientsListState(response.clients);
           }
           return response;
         }),
         catchError((err) => {
           const errorMessage = err.error?.message || err.message;
           this.handleError(errorMessage);
-          return of(null); // retorna null en caso de error
+          return of(null);
         })
       );
   }
