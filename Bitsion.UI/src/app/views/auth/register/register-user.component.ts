@@ -84,7 +84,7 @@ export class RegisterUserComponent {
         case password.errors!['required']:
           return 'La contraseña es obligatoria';
         case password.errors!['minLength']:
-          return 'La contraseña debe tener al menos 6 caracteres';
+          return 'La contraseña debe tener al menos 8 caracteres';
         default:
           return null;
       }
