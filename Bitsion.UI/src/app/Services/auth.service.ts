@@ -83,25 +83,36 @@ export class AuthService {
     }
   }
 
-  logout(): Observable<void> {
-    const refreshToken = localStorage.getItem('refreshToken');
-    
-    if (refreshToken) {
-      return this.revokeRefreshToken(refreshToken).pipe(
-        map(() => {
-          this.clearTokens(); // limpiamos los tokens si la revocación fue exitosa
-        }),
-        catchError((err) => {
-          console.error('Error revoking refresh token:', err); // Manejamos cualquier error
-          this.clearTokens(); // limpiamos los tokens incluso si hay un error
-          return of(); // necesitamos retornar un observable para prevenir bloqueos
-        })
-      );
-    } else {
-      this.clearTokens(); // si no hay tokens los eliminamos
-      return of();
+  /**
+   * Este seria el logout a implementar si la seguridad estuviera funcionando
+   * 
+    logout(): Observable<boolean> {
+      const refreshToken = localStorage.getItem('refreshToken');
+      
+      if (refreshToken) {
+        return this.revokeRefreshToken(refreshToken).pipe(
+          map(() => {
+            this.clearTokens(); // limpiamos los tokens si la revocación fue exitosa
+            return true
+          }),
+          catchError((err) => {
+            console.error('Error revoking refresh token:', err); // Manejamos cualquier error
+            this.clearTokens(); // limpiamos los tokens incluso si hay un error
+            return of(false); // necesitamos retornar un observable para prevenir bloqueos
+          })
+        );
+      } else {
+        this.clearTokens(); // si no hay tokens los eliminamos
+        return of(false);
+      }
     }
-  }
+   */
+
+    logout(): Observable<boolean> {
+      this.clearTokens();
+      return of(true);  // retorna un observable indicando que el logout fue exitoso
+    }
+
   
   private clearTokens(): void {
     localStorage.removeItem('accessToken');
