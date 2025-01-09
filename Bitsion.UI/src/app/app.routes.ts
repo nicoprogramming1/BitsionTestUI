@@ -8,7 +8,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./views/auth/login/login.component').then((m) => m.LoginComponent),
   },
-  // solo accesible para admin
   {
     title: 'Registro de usuarios',
     path: 'register-user',
@@ -17,36 +16,30 @@ export const routes: Routes = [
         (m) => m.RegisterUserComponent
       ),
     canActivate: [authGuard],
-    data: { menu: { role: 'admin' } },
   },
-  // Rutas para el CRUD de Clientes
   {
-    path: '',
+    title: 'Consulta de cliente',
+    path: 'client/:id',
+    loadComponent: () =>
+      import('./views/clients/client/client.component').then((m) => m.ClientComponent),
     canActivate: [authGuard],
-    children: [
-      {
-        path: 'list',
-        title: 'Clientes',
-        loadComponent: () =>
-          import('./views/clients/list/list.component').then((m) => m.ListComponent),
-      },
-      {
-        path: 'client/:id',
-        title: 'Consulta de cliente',
-        loadComponent: () =>
-          import('./views/clients/client/client.component').then((m) => m.ClientComponent),
-      },
-      {
-        path: 'register',
-        title: 'Registro de cliente',
-        loadComponent: () =>
-          import('./views/clients/register/register-client.component').then(
-            (m) => m.RegisterClientComponent
-          ),
-      },
-    ],
   },
-  // acá redireccionamos la ruta por defecto al listado de clientes
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // esta momentaneamente redirigiendo al login
-  { path: '**', redirectTo: 'login' }, // redirige cualquier ruta no encontrada al login
+  {
+    title: 'Registro de clientes',
+    path: 'register',
+    loadComponent: () =>
+      import('./views/clients/register/register-client.component').then(
+        (m) => m.RegisterClientComponent
+      ),
+    canActivate: [authGuard],
+  },
+  {
+    title: 'Clientes',
+    path: 'list',
+    loadComponent: () =>
+      import('./views/clients/list/list.component').then((m) => m.ListComponent),
+    canActivate: [authGuard],
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' },
 ];
