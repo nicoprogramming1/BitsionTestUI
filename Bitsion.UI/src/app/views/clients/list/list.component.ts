@@ -15,9 +15,9 @@ export class ListComponent {
   private clientService = inject(ClientService);
   private clientStateService = inject(ClientStateService);
 
-  public loading = this.clientStateService.loading();
-  public error = this.clientStateService.error();
-  public clients = this.clientStateService.clients();
+  public loading = this.clientStateService.loading;
+  public error = this.clientStateService.error;
+  public clients = this.clientStateService.clients;
 
   public page: number = 1;
   public totalPages: number = 1;  // total de páginas que tenemos
@@ -29,9 +29,7 @@ export class ListComponent {
   };
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.loadClients(this.page);
-    }, 3000);
+    this.loadClients(this.page);
   }
 
   loadClients(page: number) {
@@ -53,6 +51,8 @@ export class ListComponent {
     event.preventDefault();
     this.loadClients(1);
   }
+
+  // FUNCIONES AUXILIARES
 
   // existe página anterior?
   canGoBack(): boolean {
