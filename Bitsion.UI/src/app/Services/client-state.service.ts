@@ -11,7 +11,7 @@ export class ClientStateService {
     clients: [],
     client: null,
     error: null,
-    loading: true,
+    loading: false,
   });
 
   public clients = computed(() => this.#state().clients);
