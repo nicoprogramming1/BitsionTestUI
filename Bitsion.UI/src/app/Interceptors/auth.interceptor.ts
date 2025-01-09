@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (accessToken) {
       req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `${accessToken}`,
         },
       });
     }
@@ -56,7 +56,7 @@ export class AuthInterceptor implements HttpInterceptor {
           // actualizamos la solicitud con el nuevo token
           req = req.clone({
             setHeaders: {
-              Authorization: `Bearer ${newTokens.accessToken}`,
+              Authorization: `${newTokens.accessToken}`,
             },
           });
           return next.handle(req); // reintentar la solicitud original
