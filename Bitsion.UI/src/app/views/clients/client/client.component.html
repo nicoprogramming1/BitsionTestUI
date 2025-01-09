@@ -1,7 +1,5 @@
 @if(client){
-  <div>
-    <h2>Detalles del Cliente</h2>
-  
+  <div>  
     <!-- este es el formulario en modo edición -->
     @if(isEditing){
       <form #clientForm="ngForm" (ngSubmit)="onSave(clientForm)">
@@ -24,9 +22,9 @@
         <div>
           <label for="gender">Género:</label>
           <select id="gender" [(ngModel)]="client.gender" name="gender" required>
-            <option value="Male">Masculino</option>
-            <option value="Female">Femenino</option>
-            <option value="Other">Otro</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
           </select>
         </div>
         <div>
@@ -36,8 +34,8 @@
         <div>
           <label for="state">Estado:</label>
           <select id="state" [(ngModel)]="client.state" name="state" required>
-            <option value="Active">Activo</option>
-            <option value="Inactive">Inactivo</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
           </select>
         </div>
         <div>
@@ -45,7 +43,7 @@
           <input id="nationality" [(ngModel)]="client.nationality" name="nationality" required />
         </div>
         <div>
-          <label for="canDrive">¿Puede Conducir?</label>
+          <label for="canDrive">¿Puede conducir?</label>
           <input type="checkbox" id="canDrive" [(ngModel)]="client.canDrive" name="canDrive" />
         </div>
         <div>
@@ -58,30 +56,100 @@
         </div>
         <div>
           <label for="otherDiseases">Otras enfermedades:</label>
-          <input id="otherDiseases" [(ngModel)]="client.otherDiseases" name="otherDiseases" />
+          <textarea id="otherDiseases" [(ngModel)]="client.otherDiseases" name="otherDiseases" rows="4" cols="50"></textarea>
         </div>
-        <button type="submit">Guardar Cambios</button>
+        <button class="btnSave" type="submit">Guardar Cambios</button>
+        <button class="btnMod" (click)="toggleEdit()">{{ isEditing ? 'Cancelar' : 'Modificar' }}</button>
+        <button class="btnDelete" (click)="confirmDelete()">Eliminar</button>
       </form>
     }
   
     <!-- En modo edit off mostraremos el cliente y su info -->
     @if(!isEditing){
-    <div class="client-info">
-      <p class="client-data"><span class="label">ID:</span> {{ client.id }}</p>
-      <p class="client-data"><span class="label">Nombre:</span> {{ client.longName }}</p>
-      <p class="client-data"><span class="label">Email:</span> {{ client.email }}</p>
-      <p class="client-data"><span class="label">Estado:</span> {{ client.state }}</p>
-      <p class="client-data"><span class="label">Teléfono:</span> {{ client.phone }}</p>
-    </div>
+      <div class="client-card">
+        <h2 class="card-title">Detalles del Cliente</h2>
+        <div class="card-content">
+          <!-- Primer Bloque -->
+          <div class="card-section">
+            <div class="info-row two-columns">
+              <div class="column">
+                <div class="info-item">
+                  <span class="label">ID:</span>
+                  <span class="value">{{ client.id }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Nombre:</span>
+                  <span class="value">{{ client.longName }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Email:</span>
+                  <span class="value">{{ client.email }}</span>
+                </div>
+              </div>
+              <div class="column">
+                <div class="info-item">
+                  <span class="label">Edad:</span>
+                  <span class="value">{{ client.age }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Género:</span>
+                  <span class="value">{{ client.gender }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Nacionalidad:</span>
+                  <span class="value">{{ client.nationality }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Segundo Bloque -->
+          <div class="card-section">
+            <div class="info-row two-columns">
+              <div class="column">
+                <div class="info-item">
+                  <span class="label">¿Puede conducir?:</span>
+                  <span class="value">{{ client.canDrive ? 'Sí' : 'No' }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">¿Es diabético?:</span>
+                  <span class="value">{{ client.isDiabetic ? 'Sí' : 'No' }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">¿Usa gafas?:</span>
+                  <span class="value">{{ client.wearGlasses ? 'Sí' : 'No' }}</span>
+                </div>
+              </div>
+              <div class="column">
+                <div class="info-item">
+                  <span class="label">Teléfono:</span>
+                  <span class="value">{{ client.phone }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Estado:</span>
+                  <span class="value">{{ client.state }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Tercer Bloque -->
+          <div class="card-section">
+            <div class="info-row">
+              <div class="info-item">
+                <span class="label">Otras enfermedades:</span>
+                <textarea class="value-textarea" disabled>{{ client.otherDiseases }}</textarea>
+                
+                <button class="btnMod" (click)="toggleEdit()">{{ isEditing ? 'Cancelar' : 'Modificar' }}</button>
+                    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+            
     }
-  
-  
-    <!-- btnes modificar / eliminar -->
-    <div>
-      <button (click)="toggleEdit()">{{ isEditing ? 'Cancelar' : 'Modificar' }}</button>
-      <button (click)="confirmDelete()">Eliminar</button>
-    </div>
-  
+      
     <!-- confirmamos eliminiación -->
     @if(isConfirmingDelete){
     <div class="confirmation-dialog">
@@ -89,7 +157,6 @@
       <button (click)="onDelete(client.id)">Sí</button>
       <button (click)="cancelDelete()">No</button>
     </div>
-  
     }
   </div>
 }
