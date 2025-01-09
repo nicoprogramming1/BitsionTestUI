@@ -18,7 +18,7 @@
             </div>
 
             <div class="filter-actions">
-                <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+                <button type="submit" class="btn">Filtrar</button>
             </div>
         </form>
     </div>
@@ -37,12 +37,16 @@
               <th class="table__heading">Estado</th>
             </tr>
             @for (client of clients(); track client.id) {
-                <tr class="table__row">
-                    <td class="table__content" data-heading="Cliente">{{ client.longName }}</td>
-                    <td class="table__content" data-heading="Email">{{ client.email }}</td>
-                    <td class="table__content" data-heading="Teléfono">{{ client.phone }}</td>
-                    <td class="table__content" data-heading="Estado">{{ client.state }}</td>
-                </tr>
+                
+                    <tr class="table__row">
+                        <td class="table__content" data-heading="Cliente">
+                            <a (click)="consultClient(client.id)">{{ client.longName }}</a>
+                        </td>
+                        <td class="table__content" data-heading="Email">{{ client.email }}</td>
+                        <td class="table__content" data-heading="Teléfono">{{ client.phone }}</td>
+                        <td class="table__content" data-heading="Estado">{{ client.state }}</td>
+                    </tr>
+                
             }
         </table>
 

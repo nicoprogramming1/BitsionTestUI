@@ -7,8 +7,6 @@
     gap: 20px;
 }
 
-
-/* filtros */
 .filter-container {
     display: flex;
     align-items: center;
@@ -22,11 +20,10 @@
 
 .filter-container h2 {
     flex: 1;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin-right: 20px;
 }
 
-/* form de filtros */
 .filter-container form {
     display: flex;
     gap: 10px;
@@ -38,7 +35,7 @@
 .row {
     display: flex;
     gap: 16px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
 
@@ -55,14 +52,17 @@
     padding: 10px 20px;
     font-size: 1rem;
     border-radius: 5px;
-    background-color: #007bff;
     border: none;
     color: white;
     cursor: pointer;
 }
 
+.btn {
+    background-color: #a09dd3;
+}
+
 .filter-container .btn:hover {
-    background-color: #0056b3;
+    background-color: #807db9;
 }
 
 .container {
@@ -74,7 +74,6 @@
     align-items: center;
 }
 
-/* listado de clientes */
 .clients-list {
     padding: 20px;
     width: 100%;
@@ -85,20 +84,20 @@
 .table {
     border-collapse: collapse;
     width: 100%;
-    table-layout: fixed; /* Para distribuir espacio equitativamente */
+    table-layout: fixed;
 }
 
 th, td {
     padding: 12px 20px;
     text-align: left;
-    border-bottom: 1px solid #ddd; /* Línea para separar las filas */
+    border-bottom: 1px solid #ddd;
 }
 
 th {
     font-size: 1rem;
     font-weight: 700;
     color: #333;
-    border-bottom: 2px solid #ffc842;
+    border-bottom: 2px solid #807db9;
 }
 
 td {
@@ -111,10 +110,36 @@ td {
 }
 
 .table__row:hover {
-    background-color: #f4f4f4; /* Resaltar fila al pasar el cursor */
+    background-color: #bfbcf1;
 }
 
-/* Tabla responsive */
+@media (max-width: 768px) {
+    .filter-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .filter-container form {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .filter-container input {
+        flex: 1;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .clients-list {
+        grid-template-columns: 1fr;
+    }
+
+    .pagination .page-item a {
+        padding: 6px 12px;
+    }
+}
+
 @media (max-width: 32rem) {
     .table__heading {
         display: none;
@@ -149,7 +174,6 @@ h1, h4 {
     text-align: center;
 }
 
-/* paginación */
 .pagination {
     display: flex;
     justify-content: center;
@@ -164,41 +188,13 @@ h1, h4 {
     padding: 8px 16px;
     margin: 0 5px;
     background-color: #f8f9fa;
-    color: #007bff;
+    color: #a09dd3;
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .pagination .page-item a:hover {
-    background-color: #007bff;
+    background-color: #807db9;
     color: white;
-}
-
-/* Ajustes para pantallas pequeñas */
-@media (max-width: 768px) {
-    .filter-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .filter-container form {
-        width: 100%;
-        flex-direction: column;
-    }
-
-    .filter-container input {
-        flex: 1;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .clients-list {
-        grid-template-columns: 1fr;
-    }
-
-    .pagination .page-item a {
-        padding: 6px 12px;
-    }
 }
