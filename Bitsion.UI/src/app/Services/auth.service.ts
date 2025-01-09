@@ -18,6 +18,11 @@ export class AuthService {
   private http = inject(HttpClient);
   private authStateService = inject(AuthStateService);
 
+  getAccessToken(): string {
+    return localStorage.getItem('accessToken') || ''; // Nunca debe retornar null
+  }
+  
+
   userRegister(request: UserRegisterRequest): Observable<User | null> {
     this.authStateService.setLoadingState(); // establecemos el estado de loading
     return this.http
