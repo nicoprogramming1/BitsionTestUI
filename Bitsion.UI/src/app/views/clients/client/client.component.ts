@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ClientService } from '../../../services/client.service';
 import { ClientStateService } from '../../../services/client-state.service';
-import { ActivatedRoute } from '@angular/router';
-import { ClientResponse } from '../../../interfaces/client.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ClientResponse, Gender, Nationality, State } from '../../../interfaces/client.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -16,10 +16,15 @@ export class ClientComponent {
   private clientService = inject(ClientService)
   private clientStateService = inject(ClientStateService)
   private route = inject(ActivatedRoute)
+  private router = inject(Router)
 
   public client!: ClientResponse | null;
   public isEditing: boolean = false;  // para alternar entre modo visualización y edición
-  public isConfirmingDelete: boolean = false;
+
+    // recuperamos las enumeraciones
+    public countries = Object.values(Nationality)
+    public genders = Object.values(Gender)
+    public states = Object.values(State)
 
   public loading = this.clientStateService.loading()
   public error = this.clientStateService.error()
@@ -61,29 +66,18 @@ export class ClientComponent {
         },
       });
     } else {
-      console.error('El cliente no tiene ID o el ormulario es inválido');
+      console.error('El cliente no tiene ID o el formulario es inválido');
     }
-  }
-  
-
-  confirmDelete(): void {
-    this.isConfirmingDelete = true;
-  }
-
-  cancelDelete(): void {
-    this.isConfirmingDelete = false;
   }
 
   onDelete(clientId: string | undefined): void {
     if (clientId) {
       this.clientService.deleteClient(clientId).subscribe({
-        next: (res) => {
-          if (res) {
-            this.isConfirmingDelete = false;
-          }
+        next: () => {
+            this.router.navigate(['/list']);
         },
         error: (err) => {
-          console.error('Error al eliminar cliente: ', err.message);
+          console.error('Error al eliminar el cliente: ', err.message);
         },
       });
     } else {
