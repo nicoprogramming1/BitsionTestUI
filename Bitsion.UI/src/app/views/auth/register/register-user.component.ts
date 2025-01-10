@@ -68,7 +68,7 @@ export class RegisterUserComponent {
     if (email?.touched && !email.valid) {
       switch (true) {
         case email.errors!['required']:
-          return 'El Email es obligatoria';
+          return 'El Email es obligatorio';
         case email.errors!['email']:
           return 'Debe tener formato email';
         default:
