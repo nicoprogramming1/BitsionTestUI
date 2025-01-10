@@ -72,7 +72,7 @@ export class RegisterClientComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const client: ClientRegisterRequest = this.registerForm.value;
+      const client = this.registerForm.value;
 
       this.clientService.registerClient(client).subscribe({
         next: (res) => {
@@ -119,9 +119,9 @@ export class RegisterClientComponent {
     if (email?.touched && !email.valid) {
       switch (true) {
         case email.errors!['required']:
-          return 'El Email es obligatoria';
+          return 'El Email es obligatorio';
         case email.errors!['email']:
-          return 'Debe tener formato email';
+          return 'Debe tener formato de email';
         default:
           return null;
       }
