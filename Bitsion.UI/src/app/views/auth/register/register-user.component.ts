@@ -25,7 +25,7 @@ export class RegisterUserComponent {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.registerForm.valid) {
       const formValues = this.registerForm.value;
 
