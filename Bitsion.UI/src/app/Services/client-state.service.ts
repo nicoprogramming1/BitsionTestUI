@@ -67,7 +67,7 @@ export class ClientStateService {
     }));
   }
   
-
+  // no implementado
   public deleteAllClientsState() {
     this.#state.update((state) => ({
       ...state,
