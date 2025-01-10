@@ -2,69 +2,76 @@
   <div>  
     <!-- este es el formulario en modo edición -->
     @if(isEditing){
-      <form #clientForm="ngForm" (ngSubmit)="onSave(clientForm)" class="client-form">
+      <form #clientForm="ngForm" [formGroup]="updateForm" (ngSubmit)="onSave(clientForm)" class="client-form">
         <div class="form-row">
           <div class="form-group">
             <label for="longName">Nombre Completo:</label>
-            <input id="longName" [(ngModel)]="client.longName" name="longName" required class="form-control" />
+            <input id="longName" [(ngModel)]="client.longName" name="longName" required class="form-control" formControlName="longName"/>
+            <div class="text-danger">{{showLongNameErrors()}}</div>
           </div>
           <div class="form-group">
             <label for="age">Edad:</label>
-            <input id="age" type="number" [(ngModel)]="client.age" name="age" required class="form-control" />
+            <input id="age" type="number" [(ngModel)]="client.age" name="age" required class="form-control" formControlName="age" />
+            <div class="text-danger">{{showAgeErrors()}}</div>
           </div>
         </div>
       
         <div class="form-row">
           <div class="form-group">
             <label for="email">Correo:</label>
-            <input id="email" [(ngModel)]="client.email" name="email" required class="form-control" />
+            <input id="email" [(ngModel)]="client.email" name="email" required class="form-control" formControlName="email" />
+            <div class="text-danger">{{showEmailErrors()}}</div>
           </div>
           <div class="form-group">
             <label for="gender">Género:</label>
-            <select id="gender" [(ngModel)]="client.gender" name="gender" required class="form-control">
+            <select id="gender" [(ngModel)]="client.gender" name="gender" required class="form-control" formControlName="gender">
               @for(gender of genders; track gender){
                 <option [value]="gender">{{ gender }}</option>
               }
             </select>
+            <div class="text-danger">{{showGenderErrors()}}</div>
           </div>
         </div>
       
         <div class="form-row">
           <div class="form-group">
             <label for="phone">Teléfono:</label>
-            <input id="phone" [(ngModel)]="client.phone" name="phone" required class="form-control" />
+            <input id="phone" [(ngModel)]="client.phone" name="phone" required class="form-control" formControlName="phone" />
+            <div class="text-danger">{{showPhoneErrors()}}</div>
           </div>
           <div class="form-group">
             <label for="state">Estado:</label>
-            <select id="state" [(ngModel)]="client.state" name="state" required class="form-control">
+            <select id="state" [(ngModel)]="client.state" name="state" required class="form-control" formControlName="state">
               @for(state of states; track state){
                 <option [value]="state">{{ state }}</option>
               }
             </select>
+            <div class="text-danger">{{showStateErrors()}}</div>
           </div>
         </div>
       
         <div class="form-row">
           <div class="form-group">
             <label for="nationality">Nacionalidad:</label>
-            <select id="nationality" [(ngModel)]="client.nationality" name="nationality" required class="form-control">
+            <select id="nationality" [(ngModel)]="client.nationality" name="nationality" required class="form-control" formControlName="nationality">
               @for(country of countries; track country){
                 <option [value]="country">{{ country }}</option>
               }
             </select>
+            <div class="text-danger">{{showNationalityErrors()}}</div>
             </div>
           <div class="checks">
             <div class="form-group checkbox">
               <label for="canDrive">¿Puede conducir?</label>
-              <input type="checkbox" id="canDrive" [(ngModel)]="client.canDrive" name="canDrive" />
+              <input type="checkbox" id="canDrive" [(ngModel)]="client.canDrive" name="canDrive" formControlName="canDrive" />
             </div>
             <div class="form-group checkbox">
               <label for="isDiabetic">¿Es diabético?</label>
-              <input type="checkbox" id="isDiabetic" [(ngModel)]="client.isDiabetic" name="isDiabetic" />
+              <input type="checkbox" id="isDiabetic" [(ngModel)]="client.isDiabetic" name="isDiabetic" formControlName="isDiabetic" />
             </div>
             <div class="form-group checkbox">
               <label for="wearGlasses">¿Usa gafas?</label>
-              <input type="checkbox" id="wearGlasses" [(ngModel)]="client.wearGlasses" name="wearGlasses" />
+              <input type="checkbox" id="wearGlasses" [(ngModel)]="client.wearGlasses" name="wearGlasses" formControlName="wearGlasses" />
             </div>
           </div>
           
@@ -72,7 +79,8 @@
       
         <div class="form-group">
           <label for="otherDiseases">Otras enfermedades:</label>
-          <textarea id="otherDiseases" [(ngModel)]="client.otherDiseases" name="otherDiseases" rows="4" class="form-control"></textarea>
+          <textarea id="otherDiseases" [(ngModel)]="client.otherDiseases" name="otherDiseases" rows="4" class="form-control" formControlName="otherDiseases"></textarea>
+          <div class="text-danger">{{showOtherDiseasesErrors()}}</div>
         </div>
       
         <div class="form-group">
