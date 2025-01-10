@@ -3,6 +3,7 @@
     <!-- este es el formulario en modo edición -->
     @if(isEditing){
       <form #clientForm="ngForm" [formGroup]="updateForm" (ngSubmit)="onSave(clientForm)" class="client-form">
+        <h2 class="card-title2">Actualizar Cliente</h2>
         <div class="form-row">
           <div class="form-group">
             <label for="longName">Nombre Completo:</label>
