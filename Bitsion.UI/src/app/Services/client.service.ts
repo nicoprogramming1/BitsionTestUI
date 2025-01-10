@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
   Client,
+  ClientRegisterRequest,
   ClientResponse,
   ClientsResponse,
 } from '../interfaces/client.interface';
@@ -17,7 +18,7 @@ export class ClientService {
   private http = inject(HttpClient);
   private clientStateService = inject(ClientStateService);
 
-  registerClient(request: Client): Observable<Client | null> {
+  registerClient(request: ClientRegisterRequest): Observable<Client | null> {
     this.clientStateService.setLoadingState(); // establece el estado de carga
 
     return this.http

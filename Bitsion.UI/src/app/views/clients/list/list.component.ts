@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../../shared/loading-spinner/loading-spinner.component';
 import { ClientService } from '../../../services/client.service';
 import { ClientStateService } from '../../../services/client-state.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -14,10 +15,11 @@ import { ClientStateService } from '../../../services/client-state.service';
 export class ListComponent {
   private clientService = inject(ClientService);
   private clientStateService = inject(ClientStateService);
+  private router = inject(Router)
 
-  public loading = this.clientStateService.loading();
-  public error = this.clientStateService.error();
-  public clients = this.clientStateService.clients();
+  public loading = this.clientStateService.loading;
+  public error = this.clientStateService.error;
+  public clients = this.clientStateService.clients;
 
   public page: number = 1;
   public totalPages: number = 1;  // total de páginas que tenemos
@@ -29,9 +31,7 @@ export class ListComponent {
   };
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.loadClients(this.page);
-    }, 3000);
+    this.loadClients(this.page);
   }
 
   loadClients(page: number) {
@@ -53,6 +53,17 @@ export class ListComponent {
     event.preventDefault();
     this.loadClients(1);
   }
+  
+  consultClient(clientId: string | undefined): void {
+    if (!clientId) {
+      console.error("El ID del cliente es inválido");
+      return;
+    }
+    this.router.navigate(['/client', clientId]);
+  }
+  
+
+  // FUNCIONES AUXILIARES
 
   // existe página anterior?
   canGoBack(): boolean {

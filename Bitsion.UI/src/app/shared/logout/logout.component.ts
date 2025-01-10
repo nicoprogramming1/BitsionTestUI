@@ -7,18 +7,21 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [],
   templateUrl: './logout.component.html',
-  styleUrl: './logout.component.css',
+  styleUrls: ['./logout.component.css'],
 })
 export class LogoutComponent {
   private router = inject(Router);
-  private authService = inject(AuthService)
-
+  private authService = inject(AuthService);
 
   logout() {
+    console.log('Cerrando sesión...');
     this.authService.logout().subscribe({
-      next: () => this.router.navigate(['/login']), // si todo ok, redirigimos al login
+      next: () => {
+        console.log('Logout exitoso, redirigiendo al login...');
+        this.router.navigate(['/login']); // redirigimos al login
+      },
       error: (err) => {
-        console.error('Error during logout:', err);
+        console.error('Error durante el logout:', err);
       },
     });
   }

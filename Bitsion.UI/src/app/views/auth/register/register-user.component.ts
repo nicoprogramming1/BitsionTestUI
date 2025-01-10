@@ -25,7 +25,7 @@ export class RegisterUserComponent {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.registerForm.valid) {
       const formValues = this.registerForm.value;
 
@@ -68,7 +68,7 @@ export class RegisterUserComponent {
     if (email?.touched && !email.valid) {
       switch (true) {
         case email.errors!['required']:
-          return 'El Email es obligatoria';
+          return 'El Email es obligatorio';
         case email.errors!['email']:
           return 'Debe tener formato email';
         default:

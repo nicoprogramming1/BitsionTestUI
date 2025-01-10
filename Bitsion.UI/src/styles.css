@@ -43,9 +43,16 @@ body {
     font-weight: 700;
 }
 
-/* Define tipografía light */
+/* Define tipografía extra light */
 @font-face {
     font-family: montserrat;
     src: url("../public/fonts/Montserrat-ExtraLight.ttf") format("truetype");
     font-weight: 100;
+}
+
+/* Define tipografía light */
+@font-face {
+    font-family: montserrat;
+    src: url("../public/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+    font-weight: 200;
 }

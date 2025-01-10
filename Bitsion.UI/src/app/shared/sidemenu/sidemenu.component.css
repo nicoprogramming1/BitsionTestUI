@@ -1,5 +1,6 @@
 section {
-    margin-top: 120px;
+    margin-top: 55px;
+    margin-left: 50px;
 }
 
 .sidebar {
@@ -8,7 +9,7 @@ section {
     height: auto;
     padding: 1.5rem;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     max-height: 90vh;
     overflow-y: auto;
@@ -32,7 +33,7 @@ section {
     border-bottom: 1px solid #ddd;
     border-radius: 8px;
     background-color: transparent;
-    color: #495057;
+    color: #69679c;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -52,46 +53,18 @@ section {
 }
 
 .sidebar_element:hover {
-    background-color: #007bff;
+    background-color: #807db9;
     color: #fff;
-}
-
-.sidebar_icon {
-    font-size: 1.5rem;
-    color: inherit;
-    transition: transform 0.3s ease;
 }
 
 .sidebar_element:hover .sidebar_icon {
     transform: rotate(90deg);
 }
 
-.submenu {
-    list-style: none;
-    padding-left: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-.submenu_item {
-    padding: 0.5rem 1rem;
-    background-color: transparent;
-    color: #495057;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    transition: background-color 0.2s ease;
-}
-
-.submenu_item:hover {
-    background-color: #e2e6ea;
-    color: #007bff;
-}
 
 .sidebar_text {
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: 1.1rem;
+    color: #69679c;
     color: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -109,11 +82,5 @@ section {
         gap: 10px;
     }
 
-    .sidebar_icon {
-        font-size: 1.2rem;
-    }
 
-    .submenu {
-        padding-left: 1rem;
-    }
 }

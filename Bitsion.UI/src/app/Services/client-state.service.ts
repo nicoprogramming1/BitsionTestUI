@@ -11,7 +11,7 @@ export class ClientStateService {
     clients: [],
     client: null,
     error: null,
-    loading: true,
+    loading: false,
   });
 
   public clients = computed(() => this.#state().clients);
@@ -67,7 +67,7 @@ export class ClientStateService {
     }));
   }
   
-
+  // no implementado
   public deleteAllClientsState() {
     this.#state.update((state) => ({
       ...state,

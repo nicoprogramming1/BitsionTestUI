@@ -1,73 +1,48 @@
-import { inject, Injectable } from '@angular/core';
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpErrorResponse,
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
+import { inject } from "@angular/core";
+import { catchError, switchMap, throwError } from "rxjs";
+import { AuthService } from "../services/auth.service";
+import { HttpInterceptorFn } from "@angular/common/http";
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  private authService = inject(AuthService);
+export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const accessToken = localStorage.getItem('accessToken');
+  const token = authService.getAccessToken();
 
-    
-    if (accessToken) {
-      req = req.clone({
+  // Clonar la solicitud si hay un token válido
+  const authReq = token
+    ? req.clone({
         setHeaders: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: token || '', // Asegurarse de que nunca sea undefined
         },
-      });
-    }
-
-    console.log('Outgoing Request', {
-      url: req.url,
-      method: req.method,
-      headers: req.headers.keys(),
-      body: req.body,
-    });
-
-    return next.handle(req).pipe(
-      catchError((error) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
-          // si el token expiró intentamos renovarlo
-          return this.handleUnauthorizedError(req, next);
-        }
-        return throwError(() => error);
       })
-    );
-  }
+    : req; // Si no hay token, pasa la solicitud original
 
-  /**
-   * maneja errores de autenticación intentando renovar el token y reenviando la solicitud
-   * el req es la  solicitud HTTP original
-   * el next el controlador HTTP
-   */
-  private handleUnauthorizedError(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.authService.refreshToken().pipe(
-      switchMap((newTokens) => {
-        if (newTokens?.accessToken) {
-          // actualizamos la solicitud con el nuevo token
-          req = req.clone({
+  return next(authReq).pipe(
+    catchError((err) => {
+      // Manejar errores, como tokens expirados
+      return authService.refreshToken().pipe(
+        switchMap((res) => {
+          // Guardar el nuevo token
+          if (res?.accessToken) {
+            localStorage.setItem('accessToken', res.accessToken);
+          }
+
+          // Clonar la solicitud con el nuevo token
+          const newReq = req.clone({
             setHeaders: {
-              Authorization: `Bearer ${newTokens.accessToken}`,
+              Authorization: res?.accessToken || '', // Proporcionar un valor por defecto explícito
             },
           });
-          return next.handle(req); // reintentar la solicitud original
-        }
-        this.authService.logout(); // si no se puede renovar el token, cerrar sesión
-        return throwError(() => new Error('No se pudo renovar el token o ambos tokens expiraron'));
-      }),
-      catchError((err) => {
-        this.authService.logout();
-        return throwError(() => err);
-      })
-    );
-  }
-}
+
+          return next(newReq);
+        }),
+        catchError((err) => {
+          // Manejo de error en caso de fallo total (refreshToken inválido o similar)
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          return throwError(() => new Error(err));
+        })
+      );
+    })
+  );
+};
