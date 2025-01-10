@@ -2,66 +2,86 @@
   <div>  
     <!-- este es el formulario en modo edición -->
     @if(isEditing){
-      <form #clientForm="ngForm" (ngSubmit)="onSave(clientForm)">
-        <div>
-          <label for="id">ID:</label>
-          <input id="id" [(ngModel)]="client.id" name="id" required readonly />
+      <form #clientForm="ngForm" (ngSubmit)="onSave(clientForm)" class="client-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="longName">Nombre Completo:</label>
+            <input id="longName" [(ngModel)]="client.longName" name="longName" required class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="age">Edad:</label>
+            <input id="age" type="number" [(ngModel)]="client.age" name="age" required class="form-control" />
+          </div>
         </div>
-        <div>
-          <label for="longName">Nombre Completo:</label>
-          <input id="longName" [(ngModel)]="client.longName" name="longName" required />
+      
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Correo:</label>
+            <input id="email" [(ngModel)]="client.email" name="email" required class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="gender">Género:</label>
+            <select id="gender" [(ngModel)]="client.gender" name="gender" required class="form-control">
+              @for(gender of genders; track gender){
+                <option [value]="gender">{{ gender }}</option>
+              }
+            </select>
+          </div>
         </div>
-        <div>
-          <label for="age">Edad:</label>
-          <input id="age" type="number" [(ngModel)]="client.age" name="age" required />
+      
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Teléfono:</label>
+            <input id="phone" [(ngModel)]="client.phone" name="phone" required class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="state">Estado:</label>
+            <select id="state" [(ngModel)]="client.state" name="state" required class="form-control">
+              @for(state of states; track state){
+                <option [value]="state">{{ state }}</option>
+              }
+            </select>
+          </div>
         </div>
-        <div>
-          <label for="email">Correo:</label>
-          <input id="email" [(ngModel)]="client.email" name="email" required />
+      
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nationality">Nacionalidad:</label>
+            <select id="nationality" [(ngModel)]="client.nationality" name="nationality" required class="form-control">
+              @for(country of countries; track country){
+                <option [value]="country">{{ country }}</option>
+              }
+            </select>
+            </div>
+          <div class="checks">
+            <div class="form-group checkbox">
+              <label for="canDrive">¿Puede conducir?</label>
+              <input type="checkbox" id="canDrive" [(ngModel)]="client.canDrive" name="canDrive" />
+            </div>
+            <div class="form-group checkbox">
+              <label for="isDiabetic">¿Es diabético?</label>
+              <input type="checkbox" id="isDiabetic" [(ngModel)]="client.isDiabetic" name="isDiabetic" />
+            </div>
+            <div class="form-group checkbox">
+              <label for="wearGlasses">¿Usa gafas?</label>
+              <input type="checkbox" id="wearGlasses" [(ngModel)]="client.wearGlasses" name="wearGlasses" />
+            </div>
+          </div>
+          
         </div>
-        <div>
-          <label for="gender">Género:</label>
-          <select id="gender" [(ngModel)]="client.gender" name="gender" required>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-            <option value="Otro">Otro</option>
-          </select>
-        </div>
-        <div>
-          <label for="phone">Teléfono:</label>
-          <input id="phone" [(ngModel)]="client.phone" name="phone" required />
-        </div>
-        <div>
-          <label for="state">Estado:</label>
-          <select id="state" [(ngModel)]="client.state" name="state" required>
-            <option value="Activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
-          </select>
-        </div>
-        <div>
-          <label for="nationality">Nacionalidad:</label>
-          <input id="nationality" [(ngModel)]="client.nationality" name="nationality" required />
-        </div>
-        <div>
-          <label for="canDrive">¿Puede conducir?</label>
-          <input type="checkbox" id="canDrive" [(ngModel)]="client.canDrive" name="canDrive" />
-        </div>
-        <div>
-          <label for="isDiabetic">¿Es diabético?</label>
-          <input type="checkbox" id="isDiabetic" [(ngModel)]="client.isDiabetic" name="isDiabetic" />
-        </div>
-        <div>
-          <label for="wearGlasses">¿Usa gafas?</label>
-          <input type="checkbox" id="wearGlasses" [(ngModel)]="client.wearGlasses" name="wearGlasses" />
-        </div>
-        <div>
+      
+        <div class="form-group">
           <label for="otherDiseases">Otras enfermedades:</label>
-          <textarea id="otherDiseases" [(ngModel)]="client.otherDiseases" name="otherDiseases" rows="4" cols="50"></textarea>
+          <textarea id="otherDiseases" [(ngModel)]="client.otherDiseases" name="otherDiseases" rows="4" class="form-control"></textarea>
         </div>
-        <button class="btnSave" type="submit">Guardar Cambios</button>
-        <button class="btnMod" (click)="toggleEdit()">{{ isEditing ? 'Cancelar' : 'Modificar' }}</button>
-        <button class="btnDelete" (click)="confirmDelete()">Eliminar</button>
+      
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+          <button class="btn btn-secondary" (click)="toggleEdit()">{{ isEditing ? 'Cancelar' : 'Modificar' }}</button>
+          <button class="btn btn-danger" (click)="onDelete(client.id)">Eliminar</button>
+          </div>
       </form>
+            
     }
   
     <!-- En modo edit off mostraremos el cliente y su info -->
@@ -141,22 +161,13 @@
                 <textarea class="value-textarea" disabled>{{ client.otherDiseases }}</textarea>
                 
                 <button class="btnMod" (click)="toggleEdit()">{{ isEditing ? 'Cancelar' : 'Modificar' }}</button>
-                    
-              </div>
+                </div>
             </div>
           </div>
         </div>
       </div>
             
     }
-      
-    <!-- confirmamos eliminiación -->
-    @if(isConfirmingDelete){
-    <div class="confirmation-dialog">
-      <p>¿Estás seguro de que deseas eliminar este cliente?</p>
-      <button (click)="onDelete(client.id)">Sí</button>
-      <button (click)="cancelDelete()">No</button>
-    </div>
-    }
+    
   </div>
 }
