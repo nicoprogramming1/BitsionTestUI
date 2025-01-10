@@ -34,7 +34,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    title: 'Clientes',
+    title: 'Lista de clientes',
     path: 'list',
     loadComponent: () =>
       import('./views/clients/list/list.component').then((m) => m.ListComponent),
