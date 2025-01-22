@@ -1,8 +1,6 @@
 # BitsionTestUI
 This repository is for a Bitsion test
 
-# Para acceder al login una vez esté la app corriendo, ya que no es posible acceder a otra por la seguridad: http://localhost:4200/login
-
 ### Decisiones Técnicas
 
 - Se implementa un interceptor para gestionar los encabezados y tokens de acceso auth al back
